@@ -23,8 +23,8 @@ namespace SevenDigital.Messaging.Integration.Tests.MessageSending
 			MessagingSystem.Events.ClearEventHooks();
 
 			_failingMessagingBase = Substitute.For<IMessagingBase>();
-			_failingMessagingBase.PrepareForSend(Arg.Any<object>())
-				.Returns(new PreparedMessage("",""));
+			_failingMessagingBase.PrepareForSend(Arg.Any<object>(), Arg.Any<string>())
+				.Returns(new PreparedMessage("","",""));
 			_failingMessagingBase.When(m=>m.SendPrepared(Arg.Any<IPreparedMessage>()))
 				.Do(c=> { throw new Exception("test exception"); });
 

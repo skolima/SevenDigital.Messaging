@@ -98,7 +98,7 @@ namespace SevenDigital.Messaging.MessageReceiving.LocalQueue
 
 				_sleeper.Reset();
 				return new WorkQueueItem<IPendingMessage<object>>(
-					new PendingMessage<object>(new DummyRouter(), msg, 0UL),
+					new PendingMessage<object>(new DummyMessageRouter(), msg, 0UL),
 					m => {
 						// Finish a message
 						session.Flush();

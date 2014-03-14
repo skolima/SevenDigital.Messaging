@@ -76,8 +76,8 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 
 			router.AddSource("TestExchange_edgecases");
 			router.AddDestination("TestListener.Integration.edgecases");
-			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases");
-			router.Send("TestExchange_edgecases", sample);
+			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases", string.Empty);
+			router.Send("TestExchange_edgecases", sample, string.Empty);
 		}
 
 		static void SimulateOldStyleMessage(Guid cid)
@@ -94,8 +94,8 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 
 			router.AddSource("TestExchange_edgecases");
 			router.AddDestination("TestListener.Integration.edgecases");
-			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases");
-			router.Send("TestExchange_edgecases", sample);
+			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases", string.Empty);
+			router.Send("TestExchange_edgecases", sample, string.Empty);
 		}
 
 		[TestFixtureTearDown]

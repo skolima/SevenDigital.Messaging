@@ -71,7 +71,7 @@ namespace SevenDigital.Messaging.MessageSending
 		/// <param name="message">Message to be send. This must be a serialisable type</param>
 		public void SendMessage<T>(T message) where T : class, IMessage
 		{
-			var prepared = _messagingBase.PrepareForSend(message);
+			var prepared = _messagingBase.PrepareForSend(message, string.Empty);
 			_sendingDispatcher.AddWork(prepared.ToBytes());
 			HookHelper.TrySentHooks(message);
 		}

@@ -10,11 +10,11 @@ namespace SevenDigital.Messaging.MessageReceiving.LocalQueue
 	public class DummyMessageRouter:IMessageRouter
 	{
 		/** No op */public void AddSource(string name) { }
-		/** No op */public void AddBroadcastSource(string className) { }
+		/** No op */public void AddSource(string name, ExchangeType exchangeType) { }
 		/** No op */public void AddDestination(string name) { }
-		/** No op */public void Link(string sourceName, string destinationName) { } 
-		/** No op */public void RouteSources(string child, string parent) { } 
-		/** No op */public void Send(string sourceName, string data) { } 
+		/** No op */public void Link(string sourceName, string destinationName, string routingKey) { }
+		/** No op */public void RouteSources(string child, string parent, string routingKey) { }
+		/** No op */public void Send(string sourceName, string data, string routingKey) { }
 		/** No op */public string Get(string destinationName, out ulong deliveryTag) { deliveryTag = 0; return null; } 
 		/** No op */public void Finish(ulong deliveryTag) { } 
 		/** No op */public string GetAndFinish(string destinationName) { return null; }

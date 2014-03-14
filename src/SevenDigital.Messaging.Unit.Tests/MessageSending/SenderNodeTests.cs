@@ -18,6 +18,7 @@ namespace SevenDigital.Messaging.Unit.Tests.MessageSending
 	[TestFixture]
 	public class SenderNodeTests
 	{
+		private const string _messageContents = "V2=SevenDigital.Messaging.IMessage||{}";
 		ISenderNode _subject;
 		IMessagingBase _messagingBase;
 		IDispatcherFactory _dispatcherFactory;
@@ -100,8 +101,8 @@ namespace SevenDigital.Messaging.Unit.Tests.MessageSending
 		public void a_failing_event_hook_does_not_prevent_a_message_being_sent ()
 		{
 			_eventHook1.When(m=>m.MessageSent(Arg.Any<IMessage>())).Do(c => { throw new Exception("test exception"); });
-			
-			var msg = Encoding.UTF8.GetBytes("SevenDigital.Messaging.IMessage|{}");
+
+			var msg = Encoding.UTF8.GetBytes(_messageContents);
 
 			((SenderNode)_subject).SendWaitingMessage(msg);
 			
@@ -128,7 +129,7 @@ namespace SevenDigital.Messaging.Unit.Tests.MessageSending
 		[Test]
 		public void sleeper_is_reset_after_successful_message_sending ()
 		{
-			var msg = Encoding.UTF8.GetBytes("SevenDigital.Messaging.IMessage|{}");
+			var msg = Encoding.UTF8.GetBytes(_messageContents);
 			((SenderNode)_subject).SendWaitingMessage(msg);
 
 			_sleeper.Received().Reset();
@@ -139,7 +140,7 @@ namespace SevenDigital.Messaging.Unit.Tests.MessageSending
 		[Test]
 		public void send_waiting_message_sends_message_object_through_messaging_base ()
 		{
-			var msg = Encoding.UTF8.GetBytes("SevenDigital.Messaging.IMessage|{}");
+			var msg = Encoding.UTF8.GetBytes(_messageContents);
 			((SenderNode)_subject).SendWaitingMessage(msg);
 
 			_messagingBase.Received().SendPrepared(Arg.Is<IPreparedMessage>(m=>m.ToBytes().SequenceEqual(msg)));
