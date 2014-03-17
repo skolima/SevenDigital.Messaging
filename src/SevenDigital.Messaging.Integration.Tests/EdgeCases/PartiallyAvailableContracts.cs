@@ -31,7 +31,7 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 				.Handle<ISpecificMessage>().With<SampleHandler>()))
 			{
 				// Simulate sending a message with an unavailable type
-				SimulateUnknownMessage(cid);
+				SimulateUnknownMessage();
 
 				var result = SampleHandler.Trigger.WaitOne(TimeSpan.FromSeconds(2));
 				Assert.That(result, Is.True, "Did not pick up message");
@@ -49,7 +49,7 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 				_=>_.Handle<ISpecificMessage>().With<SampleHandler>()))
 			{
 				// Simulate sending a message with an unavailable type
-				SimulateOldStyleMessage(cid);
+				SimulateOldStyleMessage();
 
 				var result = SampleHandler.Trigger.WaitOne(TimeSpan.FromSeconds(2));
 				Assert.That(result, Is.True, "Did not pick up message");
@@ -58,7 +58,7 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 			}
 		}
 
-		static void SimulateUnknownMessage(Guid cid)
+		static void SimulateUnknownMessage()
 		{
 			var router = ObjectFactory.GetInstance<IMessageRouter>();
 
@@ -74,13 +74,13 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 						correct + ";" +
 						imsg + "\"}";
 
-			router.AddSource("TestExchange_edgecases");
+			router.AddSource("TestExchange_edgecases", ExchangeType.Direct);
 			router.AddDestination("TestListener.Integration.edgecases");
 			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases", string.Empty);
 			router.Send("TestExchange_edgecases", sample, string.Empty);
 		}
 
-		static void SimulateOldStyleMessage(Guid cid)
+		static void SimulateOldStyleMessage()
 		{
 			var router = ObjectFactory.TryGetInstance<IMessageRouter>();
 
@@ -92,7 +92,7 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 
 			var sample = "{\"__type\":\"" + correct + "\",\"Message\":\"hello\",\"CorrelationId\":\"05c90feb5c1041799fc0d26dda5fd1c6\",\"HashValue\":123124512}";
 
-			router.AddSource("TestExchange_edgecases");
+			router.AddSource("TestExchange_edgecases", ExchangeType.Direct);
 			router.AddDestination("TestListener.Integration.edgecases");
 			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases", string.Empty);
 			router.Send("TestExchange_edgecases", sample, string.Empty);

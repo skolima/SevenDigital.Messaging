@@ -9,7 +9,6 @@ namespace SevenDigital.Messaging.MessageReceiving.LocalQueue
 	/// </summary>
 	public class DummyMessageRouter:IMessageRouter
 	{
-		/** No op */public void AddSource(string name) { }
 		/** No op */public void AddSource(string name, ExchangeType exchangeType) { }
 		/** No op */public void AddDestination(string name) { }
 		/** No op */public void Link(string sourceName, string destinationName, string routingKey) { }
