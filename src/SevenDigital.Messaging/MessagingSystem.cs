@@ -223,18 +223,6 @@ namespace SevenDigital.Messaging
 		/// of your message broker cluster.
 		/// </summary>
 		/// <param name="host">RMQ host name or IP address</param>
-		/// <param name="username">Management user name</param>
-		/// <param name="password">Management password</param>
-		/// <param name="vhost">Virtual host (used where appropriate)</param>
-		[Obsolete("Please use SetManagementServer(string host, int port, string username, string password, string vhost) instead.")]
-		IMessagingConfigureOptions SetManagementServer(string host, string username, string password, string vhost);
-
-		/// <summary>
-		/// Configure RabbitMq specific management API.
-		/// This makes the IRabbitMqQuery type available to query the health
-		/// of your message broker cluster.
-		/// </summary>
-		/// <param name="host">RMQ host name or IP address</param>
 		/// <param name="port">RMQ management port number</param>
 		/// <param name="username">Management user name</param>
 		/// <param name="password">Management password</param>

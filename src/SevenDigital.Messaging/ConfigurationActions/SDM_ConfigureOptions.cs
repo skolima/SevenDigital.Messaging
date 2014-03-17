@@ -9,12 +9,6 @@ namespace SevenDigital.Messaging.ConfigurationActions
 {
 	class SDM_ConfigureOptions : IMessagingConfigureOptions
 	{
-		[Obsolete("Please use SetManagementServer(string host, int port, string username, string password, string vhost) instead.")]
-		public IMessagingConfigureOptions SetManagementServer(string host, string username, string password, string vhost)
-		{
-			return SetManagementServer(host, 55672, username, password, vhost);
-		}
-
 		public IMessagingConfigureOptions SetManagementServer(string host, int port, string username, string password, string vhost)
 		{
 			new MessagingBaseConfiguration().WithRabbitManagement(host, port, username, password, vhost);
