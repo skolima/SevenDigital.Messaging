@@ -6,8 +6,8 @@ using RabbitMQ.Client.Exceptions;
 using SevenDigital.Messaging.Base;
 using SevenDigital.Messaging.MessageReceiving;
 using SevenDigital.Messaging.MessageReceiving.RabbitPolling;
-using SevenDigital.Messaging.MessageSending;
 using SevenDigital.Messaging.Routing;
+using ExchangeType = SevenDigital.Messaging.Base.Routing.ExchangeType;
 
 namespace SevenDigital.Messaging.Unit.Tests.MessageReceiving
 {
@@ -72,7 +72,7 @@ namespace SevenDigital.Messaging.Unit.Tests.MessageReceiving
 		{
 			_subject.AddMessageType(typeof(IMessage));
 			_messagingBase.Received().ResetCaches();
-			_messagingBase.Received().CreateDestination(typeof(IMessage), _destinationName, string.Empty);
+			_messagingBase.Received().CreateDestination(typeof(IMessage), _destinationName, string.Empty, ExchangeType.Direct);
 		}
 		
 		[Test]
@@ -114,7 +114,7 @@ namespace SevenDigital.Messaging.Unit.Tests.MessageReceiving
 			Assert.DoesNotThrow(() => _subject.TryDequeue());
 			
 			_messagingBase.Received().ResetCaches();
-			_messagingBase.Received().CreateDestination(typeof(IMessage), _destinationName, string.Empty);
+			_messagingBase.Received().CreateDestination(typeof(IMessage), _destinationName, string.Empty, ExchangeType.Direct);
 		}
 
 		[Test]

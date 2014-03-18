@@ -4,6 +4,7 @@ using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using SevenDigital.Messaging.Base;
+using SevenDigital.Messaging.Base.Routing;
 using SevenDigital.Messaging.Base.Serialisation;
 using SevenDigital.Messaging.MessageReceiving;
 using StructureMap;
@@ -23,7 +24,7 @@ namespace SevenDigital.Messaging.Integration.Tests.MessageSending
 			MessagingSystem.Events.ClearEventHooks();
 
 			_failingMessagingBase = Substitute.For<IMessagingBase>();
-			_failingMessagingBase.PrepareForSend(Arg.Any<object>(), Arg.Any<string>())
+			_failingMessagingBase.PrepareForSend(Arg.Any<object>(), Arg.Any<string>(), Arg.Any<ExchangeType>())
 				.Returns(new PreparedMessage("","",""));
 			_failingMessagingBase.When(m=>m.SendPrepared(Arg.Any<IPreparedMessage>()))
 				.Do(c=> { throw new Exception("test exception"); });

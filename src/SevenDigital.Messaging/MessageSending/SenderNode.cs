@@ -2,13 +2,11 @@ using System.Threading;
 using DispatchSharp;
 using DispatchSharp.WorkerPools;
 using SevenDigital.Messaging.Base;
+using SevenDigital.Messaging.Base.Routing;
 using SevenDigital.Messaging.Base.Serialisation;
 using SevenDigital.Messaging.Infrastructure;
 using SevenDigital.Messaging.Logging;
 using SevenDigital.Messaging.MessageReceiving;
-// ReSharper disable RedundantUsingDirective
-
-// ReSharper restore RedundantUsingDirective
 
 namespace SevenDigital.Messaging.MessageSending
 {
@@ -71,7 +69,7 @@ namespace SevenDigital.Messaging.MessageSending
 		/// <param name="message">Message to be send. This must be a serialisable type</param>
 		public void SendMessage<T>(T message) where T : class, IMessage
 		{
-			var prepared = _messagingBase.PrepareForSend(message, string.Empty);
+			var prepared = _messagingBase.PrepareForSend(message, string.Empty, ExchangeType.Direct);
 			_sendingDispatcher.AddWork(prepared.ToBytes());
 			HookHelper.TrySentHooks(message);
 		}
@@ -93,7 +91,6 @@ namespace SevenDigital.Messaging.MessageSending
 		{
 			var lDispatcher = Interlocked.Exchange(ref _sendingDispatcher, null);
 			if (lDispatcher != null)
-				//lDispatcher.Stop();
 				lDispatcher.WaitForEmptyQueueAndStop(MessagingSystem.ShutdownTimeout);
 
 			var lQueue = Interlocked.Exchange(ref _persistentQueue, null);

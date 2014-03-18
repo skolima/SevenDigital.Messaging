@@ -2,6 +2,7 @@ using System;
 using DispatchSharp;
 using DispatchSharp.QueueTypes;
 using SevenDigital.Messaging.Base;
+using SevenDigital.Messaging.Base.Routing;
 using SevenDigital.Messaging.Infrastructure;
 using SevenDigital.Messaging.Logging;
 using SevenDigital.Messaging.Routing;
@@ -159,7 +160,7 @@ namespace SevenDigital.Messaging.MessageReceiving.RabbitPolling
 			var boundTypes = _boundMessageTypes.ToArray();
 			foreach (var sourceMessage in boundTypes)
 			{
-				_messagingBase.CreateDestination(sourceMessage, _endpoint, string.Empty);
+				_messagingBase.CreateDestination(sourceMessage, _endpoint, string.Empty, ExchangeType.Direct);
 			}
 		}
 	}
