@@ -160,7 +160,7 @@ namespace SevenDigital.Messaging.MessageReceiving.RabbitPolling
 			var boundTypes = _boundMessageTypes.ToArray();
 			foreach (var sourceMessage in boundTypes)
 			{
-				_messagingBase.CreateDestination(sourceMessage, _endpoint, string.Empty, ExchangeType.Direct);
+				_messagingBase.CreateDestination(sourceMessage, _endpoint, string.Empty, ExchangeType.Topic);
 			}
 		}
 	}

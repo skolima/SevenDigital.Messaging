@@ -74,7 +74,7 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 						correct + ";" +
 						imsg + "\"}";
 
-			router.AddSource("TestExchange_edgecases", ExchangeType.Direct);
+			router.AddSource("TestExchange_edgecases", ExchangeType.Topic);
 			router.AddDestination("TestListener.Integration.edgecases");
 			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases", string.Empty);
 			router.Send("TestExchange_edgecases", sample, string.Empty);
@@ -92,7 +92,7 @@ namespace SevenDigital.Messaging.Integration.Tests.EdgeCases
 
 			var sample = "{\"__type\":\"" + correct + "\",\"Message\":\"hello\",\"CorrelationId\":\"05c90feb5c1041799fc0d26dda5fd1c6\",\"HashValue\":123124512}";
 
-			router.AddSource("TestExchange_edgecases", ExchangeType.Direct);
+			router.AddSource("TestExchange_edgecases", ExchangeType.Topic);
 			router.AddDestination("TestListener.Integration.edgecases");
 			router.Link("TestExchange_edgecases", "TestListener.Integration.edgecases", string.Empty);
 			router.Send("TestExchange_edgecases", sample, string.Empty);

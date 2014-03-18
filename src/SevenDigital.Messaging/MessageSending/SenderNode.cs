@@ -66,10 +66,10 @@ namespace SevenDigital.Messaging.MessageSending
 		/// <summary>
 		/// Send the given message. Does not guarantee reception.
 		/// </summary>
-		/// <param name="message">Message to be send. This must be a serialisable type</param>
+		/// <param name="message">Message to send. This must be a serialisable type</param>
 		public void SendMessage<T>(T message) where T : class, IMessage
 		{
-			var prepared = _messagingBase.PrepareForSend(message, string.Empty, ExchangeType.Direct);
+			var prepared = _messagingBase.PrepareForSend(message, string.Empty, ExchangeType.Topic);
 			_sendingDispatcher.AddWork(prepared.ToBytes());
 			HookHelper.TrySentHooks(message);
 		}
