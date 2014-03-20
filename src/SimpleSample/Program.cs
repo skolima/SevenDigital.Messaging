@@ -40,7 +40,6 @@ namespace SimpleSample
 			Console.WriteLine("Pick a messaging mode:");
 			Console.WriteLine("  1  Local host RabbitMQ broker (default)");
 			Console.WriteLine("  2  Loopback mode");
-			Console.WriteLine("  3  Local disk queue storage");
 			var selection = Console.ReadKey(true);
 			switch (selection.KeyChar)
 			{
@@ -48,13 +47,6 @@ namespace SimpleSample
 					{
 						Console.WriteLine("Using loopback mode");
 						MessagingSystem.Configure.WithLoopbackMode();
-					}
-					return;
-
-				case '3':
-					{
-						Console.WriteLine("Using local disk queue storage");
-						MessagingSystem.Configure.WithLocalQueue("./simpleSampleQueue");
 					}
 					return;
 

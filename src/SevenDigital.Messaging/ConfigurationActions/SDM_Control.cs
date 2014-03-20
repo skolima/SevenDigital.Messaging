@@ -31,9 +31,6 @@ namespace SevenDigital.Messaging.ConfigurationActions
 				EjectAndDispose<IMessagingHost>();
 				EjectAndDispose<IRabbitMqConnection>();
 				EjectAndDispose<IChannelAction>();
-
-				// Maybe some local queue bits
-				EjectAndDispose<LocalQueueConfig>();
 			}
 		}
 
@@ -81,7 +78,6 @@ namespace SevenDigital.Messaging.ConfigurationActions
 		public void SetConcurrentHandlers(int max)
 		{
 			if (MessagingSystem.UsingLoopbackMode()) return;
-			if (MessagingSystem.UsingLocalQueues()) return;
 
 			if (max < 1) throw new ArgumentException("Concurrent handlers must be at least 1", "max");
 

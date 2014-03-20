@@ -1,16 +1,12 @@
 using System;
-using System.IO;
 using SevenDigital.Messaging.Base;
 using SevenDigital.Messaging.Base.RabbitMq;
-using SevenDigital.Messaging.Base.Routing;
 using SevenDigital.Messaging.EventHooks;
 using SevenDigital.Messaging.Infrastructure;
 using SevenDigital.Messaging.Loopback;
 using SevenDigital.Messaging.MessageReceiving;
-using SevenDigital.Messaging.MessageReceiving.LocalQueue;
 using SevenDigital.Messaging.MessageReceiving.RabbitPolling;
 using SevenDigital.Messaging.MessageSending;
-using SevenDigital.Messaging.MessageSending.LocalQueue;
 using SevenDigital.Messaging.Routing;
 using StructureMap;
 
@@ -77,53 +73,6 @@ namespace SevenDigital.Messaging.ConfigurationActions
 
 				MessagingSystem.Events.AddEventHook<TestEventHook>();
 			}
-		}
-
-		public ILocalQueueOptions WithLocalQueue(string storagePath)
-		{
-			lock (MessagingSystem.ConfigurationLock)
-			{
-				MessagingSystem.Concurrency = 1;
-				if (MessagingSystem.IsConfigured() || MessagingSystem.UsingLoopbackMode())
-					return new SDM_LocalQueueOptions();
-
-				new MessagingBaseConfiguration().WithDefaults();
-				ObjectFactory.EjectAllInstancesOf<IReceiver>();
-
-				// Base messaging
-				new MessagingBaseConfiguration().WithDefaults();
-				Cooldown.Activate();
-				AutoShutdown.Activate();
-
-				ObjectFactory.Configure(map => {
-					// threading and dispatch
-					map.For<IHandlerManager>().Use<HandlerManager>();
-					map.For<IDispatcherFactory>().Use<DispatcherFactory>();
-
-					// no-op proxy for routing
-					map.For<IMessageRouter>().Use<DummyMessageRouter>();
-
-					// singletons
-					map.For<ISleepWrapper>().Singleton().Use<SleepWrapper>();
-					map.For<IUniqueEndpointGenerator>().Singleton().Use<UniqueEndpointGenerator>();
-					map.For<IReceiver>().Singleton().Use<Receiver>();
-
-					// aliases
-					map.For<IReceiverControl>().Use(() => ObjectFactory.GetInstance<IReceiver>() as IReceiverControl);
-
-					// Local queue specific
-					var defaultRW = Path.Combine(storagePath, LocalQueueConfig.IncomingQueueSubpath);
-					map.For<LocalQueueConfig>().Use(new LocalQueueConfig {
-						DispatchPath = Path.Combine(storagePath, LocalQueueConfig.DispatchQueueSubpath),
-						IncomingPath = defaultRW,
-						WritePath = defaultRW
-					}
-					);
-					map.For<IPollingNodeFactory>().Use<LocalQueuePollingNodeFactory>();
-					map.For<ISenderNode>().Singleton().Use<LocalQueueSender>();
-				});
-			}
-			return new SDM_LocalQueueOptions();
 		}
 	}
 }

@@ -58,19 +58,4 @@ namespace SevenDigital.Messaging.Integration.Tests.MessageSending
 			ObjectFactory.Configure(map=>map.For<IUniqueEndpointGenerator>().Use<TestEndpointGenerator>());
 		}
 	}
-	
-	[TestFixture]
-	public class SendingAndReceiving_WithLocalPersistentQueue_Tests : SendingAndReceivingBase
-	{
-		const string LocalQueuePath = "./localQueue";
-		public override void ConfigureMessaging()
-		{
-			if (Directory.Exists(LocalQueuePath))
-				Directory.Delete(LocalQueuePath, true);
-
-			MessagingSystem.Configure.WithLocalQueue(LocalQueuePath);
-
-			ObjectFactory.Configure(map=>map.For<IUniqueEndpointGenerator>().Use<TestEndpointGenerator>());
-		}
-	}
 }

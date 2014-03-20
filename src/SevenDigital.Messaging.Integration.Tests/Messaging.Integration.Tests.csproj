@@ -68,14 +68,12 @@
     <Compile Include="Api\AutoShutdownTests.cs" />
     <Compile Include="Api\ConcurrencyLimit.cs" />
     <Compile Include="Api\ConfiguringAcrossMethods.cs" />
-    <Compile Include="LocalQueue\LocalQueueErrorHookTests.cs" />
     <Compile Include="Api\RegisteringMultipleHandlers.cs" />
     <Compile Include="EdgeCases\PartiallyAvailableContracts.cs" />
     <Compile Include="EdgeCases\SenderDisposalTests.cs" />
     <Compile Include="EdgeCases\ShutDownBeforeConfiguration.cs" />
     <Compile Include="Hooks\FailingEventHookTests.cs" />
     <Compile Include="Hooks\FailingHandlerEventHookTests.cs" />
-    <Compile Include="LocalQueue\SendToTests.cs" />
     <Compile Include="Loopback\LoopbackModeTests.cs" />
     <Compile Include="MessageSending\BaseCases\SendingAndReceivingBase.cs" />
     <Compile Include="MessageSending\NonPersistentQueueTests.cs" />
@@ -132,6 +130,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LocalQueue\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

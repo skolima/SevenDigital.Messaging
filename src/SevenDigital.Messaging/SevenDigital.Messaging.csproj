@@ -60,15 +60,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHooks\LocalQueueExceptionHook.cs" />
-    <Compile Include="ConfigurationActions\SDM_LocalQueueOptions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IHandlerExceptionMessage.cs" />
-    <Compile Include="MessageReceiving\LocalQueue\DummyMessageRouter.cs" />
-    <Compile Include="ConfigurationActions\LocalQueueConfig.cs" />
-    <Compile Include="MessageReceiving\LocalQueue\LocalQueuePollingNode.cs" />
-    <Compile Include="MessageReceiving\LocalQueue\LocalQueuePollingNodeFactory.cs" />
-    <Compile Include="MessageSending\LocalQueue\LocalQueueSender.cs" />
+    <Compile Include="Loopback\TypeRoutingKeyPair.cs" />
     <Compile Include="Infrastructure\AutoShutdown.cs" />
     <Compile Include="Infrastructure\ThreadWatcher.cs" />
     <Compile Include="MessageReceiving\Binding.cs" />
@@ -139,7 +132,10 @@
       <Name>DiskQueue</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MessageReceiving\LocalQueue\" />
+    <Folder Include="MessageSending\LocalQueue\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

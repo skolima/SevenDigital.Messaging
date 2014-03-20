@@ -5,7 +5,6 @@ using SevenDigital.Messaging.ConfigurationActions;
 using SevenDigital.Messaging.EventHooks;
 using SevenDigital.Messaging.Logging;
 using SevenDigital.Messaging.Loopback;
-using SevenDigital.Messaging.MessageSending.LocalQueue;
 using StructureMap;
 
 namespace SevenDigital.Messaging
@@ -71,15 +70,6 @@ namespace SevenDigital.Messaging
 		}
 
 		/// <summary>
-		/// Returns true if in LocalQueue mode
-		/// </summary>
-		public static bool UsingLocalQueues()
-		{
-			return ObjectFactory.GetAllInstances<ISenderNode>()
-				.Any(n => n is LocalQueueSender);
-		}
-
-		/// <summary>
 		/// Returns true if messaging has been configured and not shutdown
 		/// </summary>
 		internal static bool IsConfigured()
@@ -114,10 +104,8 @@ namespace SevenDigital.Messaging
 
 		/// <summary>
 		/// Set maximum concurrent handlers. Set to 1 for single-thread mode.
-		/// <para>This is ignored for Loopback and LocalQueue modes.</para>
+		/// <para>This is ignored for Loopback</para>
 		/// </summary>
-		/// <remarks>LocalQueue mode could be made to be multi-dispatch, but it's not
-		/// implemented at the moment.</remarks>
 		void SetConcurrentHandlers(int max);
 
 		/// <summary>
@@ -201,15 +189,6 @@ namespace SevenDigital.Messaging
 		/// Calling `WithLoopbackMode()` more than once has no effect.
 		/// </summary>
 		void WithLoopbackMode();
-		
-		/// <summary>
-		/// Use a local-machine persistent queue for process-to-process message sending
-		/// that does not rely on both sides being connected at once.
-		/// <para>This is not high performance for multiple-readers or high write loads</para>
-		/// </summary>
-		/// <param name="storagePath">File path for storing queue items. This should either not
-		/// be created or have been created previously by `SetLocalQueue`</param>
-		ILocalQueueOptions WithLocalQueue(string storagePath);
 	}
 
 	/// <summary>
@@ -252,26 +231,5 @@ namespace SevenDigital.Messaging
 		/// in their names will be deleted on disposal.
 		/// </summary>
 		void SetIntegrationTestMode();
-	}
-	
-	/// <summary>
-	/// Options for local queue mode
-	/// </summary>
-	public interface ILocalQueueOptions
-	{
-		/// <summary>
-		/// Adds an event hook to capture handler exceptions
-		/// in this process and send an <see cref="IHandlerExceptionMessage"/>
-		/// to the named locally available storage
-		/// </summary>
-		ILocalQueueOptions SendHandlerErrorsToQueue(string errorQueueStorage);
-
-		/// <summary>
-		/// Send messages to a different queue.
-		/// <para>`MessagingSystem.Receiver()` will read from the originally configured queue</para>
-		/// <para>`MessagingSystem.Sender()` will write to the queue specified by `writeQueuePath`</para>
-		/// <para>This is useful for chaining steps between processes.</para>
-		/// </summary>
-		ILocalQueueOptions SendTo(string writeQueuePath);
 	}
 }
