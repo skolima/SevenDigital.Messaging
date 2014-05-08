@@ -5,7 +5,7 @@ namespace SevenDigital.Messaging.Routing
 	/// <summary>
 	/// Container for a messaging host definition
 	/// </summary>
-	public class Host: IMessagingHost, IEquatable<Host>
+	public class Host: IEquatable<Host>
 	{
 		readonly string _machineName;
 

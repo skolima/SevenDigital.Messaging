@@ -21,11 +21,7 @@ namespace SevenDigital.Messaging.ConfigurationActions
 			var hostName = parts[0];
 			var virtualHost = (parts.Length > 1) ? (parts[1]) : ("/");
 
-			ObjectFactory.Configure(map =>
-			{
-				map.For<IMessagingHost>().Use(() => new Host(hostName));
-				map.For<IRabbitMqConnection>().Use(() => new RabbitMqConnection(hostName, virtualHost));
-			});
+			ObjectFactory.Configure(map => map.For<IRabbitMqConnection>().Use(() => new RabbitMqConnection(hostName, virtualHost)));
 			return this;
 		}
 

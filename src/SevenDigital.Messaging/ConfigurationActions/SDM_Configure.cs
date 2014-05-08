@@ -30,7 +30,6 @@ namespace SevenDigital.Messaging.ConfigurationActions
 
 				ObjectFactory.Configure(map => {
 					// Base messaging
-					map.For<IMessagingHost>().Use(() => new Host("localhost"));
 					map.For<IRabbitMqConnection>().Use(() => new RabbitMqConnection("localhost"));
 					map.For<IUniqueEndpointGenerator>().Singleton().Use<UniqueEndpointGenerator>();
 

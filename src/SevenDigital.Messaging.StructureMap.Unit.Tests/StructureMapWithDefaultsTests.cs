@@ -51,20 +51,6 @@ namespace SevenDigital.Messaging.StructureMap.Unit.Tests
 		}
 
 		[Test]
-		public void Should_get_messaging_host_implementation()
-		{
-			Assert.That(ObjectFactory.GetInstance<IMessagingHost>(), Is.Not.Null);
-			Assert.That(ObjectFactory.GetInstance<IMessagingHost>(), Is.InstanceOf<Host>());
-		}
-
-		[Test]
-		public void Should_give_provided_name_as_host_string()
-		{
-			Assert.That(ObjectFactory.GetInstance<IMessagingHost>().ToString(),
-				Is.EqualTo(HostName));
-		}
-
-		[Test]
 		public void Should_have_unique_name_generator_instance()
 		{
 			Assert.That(ObjectFactory.GetInstance<IUniqueEndpointGenerator>(), Is.InstanceOf<UniqueEndpointGenerator>());

@@ -28,7 +28,6 @@ namespace SevenDigital.Messaging.ConfigurationActions
 				EjectAndDispose<ISleepWrapper>();
 
 				// Shut down base rabbitmq stuff
-				EjectAndDispose<IMessagingHost>();
 				EjectAndDispose<IRabbitMqConnection>();
 				EjectAndDispose<IChannelAction>();
 			}
